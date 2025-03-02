@@ -126,6 +126,22 @@ def populate_fields():
     ]
 
 
+def validate_inputs(title, description, image_prompt, custom_image):
+    """Validate if essential inputs are present"""
+    # Debug prints
+    print(f"Title: '{title}'")
+    print(f"Description: '{description}'")
+    print(f"Image prompt: '{image_prompt}'")
+    print(f"Custom image: {custom_image}, type: {type(custom_image)}")
+    
+    has_title_desc = len(title.strip()) > 0 and len(description.strip()) > 0
+    has_image_source = len(image_prompt.strip()) > 0
+    
+    result = has_title_desc and has_image_source
+    print(f"Validation result: {result}")
+    return gr.update(interactive=result)
+
+
 def launch_frontend():
     """Launch the Gradio frontend"""
     with gr.Blocks(theme=gr.themes.Soft(), title="Social Scheduler") as app:
@@ -154,18 +170,38 @@ def launch_frontend():
                 
                 post_now = gr.Checkbox(label="Post to Instagram immediately", value=True)
                 
-                create_button = gr.Button("Create Post", variant="primary")
+                create_button = gr.Button("Create Post", variant="primary", interactive=False)
             
             with gr.Column():
                 output = gr.Textbox(label="Result", lines=8)
                 output_image = gr.Image(label="Generated or Uploaded Image")
         
-        # Connect the auto-populate button
+        # Add a helper function to force enable the button
+        def force_enable_button():
+            return gr.update(interactive=True)
+        
+        # Connect the auto-populate button with the force enable
         auto_populate.click(
             fn=populate_fields,
             inputs=[],
             outputs=[title, description, image_prompt, custom_image, tone, post_now]
+        ).then(
+            fn=validate_inputs,
+            inputs=[title, description, image_prompt, custom_image],
+            outputs=create_button
+        ).then(
+            fn=force_enable_button,
+            inputs=[],
+            outputs=create_button
         )
+        
+        # Input validation for enabling/disabling create button
+        for input_component in [title, description, image_prompt, custom_image]:
+            input_component.change(
+                fn=validate_inputs,
+                inputs=[title, description, image_prompt, custom_image],
+                outputs=create_button
+            )
         
         # Connect the create post button
         create_button.click(
