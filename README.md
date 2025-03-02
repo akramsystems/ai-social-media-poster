@@ -32,7 +32,10 @@ POSTING_FREQUENCY=daily,weekly
 POSTING_TIME=HH:MM
 
 
-## Run the CLI
+## Run via Gradio:
+python -m social_scheduler.cli launch-ui
+
+## Run via CLI:
 
 ### Create and schedule a post
 python -m social_scheduler.cli create-post -r 1
