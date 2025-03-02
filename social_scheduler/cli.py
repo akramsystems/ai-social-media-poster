@@ -237,5 +237,13 @@ def delete_post(ctx, post_id):
     else:
         click.echo(f"Post {post_id} not found.")
 
+@cli.command()
+@click.pass_context
+def launch_ui(ctx):
+    """Launch the Gradio web interface"""
+    from .frontend import launch_frontend
+    click.echo("Launching Gradio web interface...")
+    launch_frontend()
+
 if __name__ == '__main__':
     cli(obj={}) 

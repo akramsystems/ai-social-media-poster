@@ -6,3 +6,4 @@ requests
 instagrapi
 schedule
 pillow
+gradio
