@@ -1,0 +1,44 @@
+# Social Scheduler
+
+An AI-powered social media content scheduler that fetches content from RSS feeds, generates images using DALL-E, creates captions with OpenAI, and posts to Instagram.
+
+## Features
+
+- Fetch content from RSS feeds
+- Generate images using DALL-E
+- Create captions using OpenAI
+- Schedule and post content to Instagram
+
+## Installation
+
+1. Clone the repository:
+
+2. Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+3. Create a `.env` file with your API keys:
+
+OPENAI_API_KEY=your_openai_api_key
+INSTAGRAM_USERNAME=your_instagram_username
+INSTAGRAM_PASSWORD=your_instagram_password
+RSS_FEEDS=your_rss_feed_url1,your_rss_feed_url2
+POSTING_FREQUENCY=daily,weekly
+POSTING_TIME=HH:MM
+
+
+## Run the CLI
+
+### Fetch content from RSS feeds
+python -m social_scheduler.cli fetch-content
+
+### Create and schedule a post
+python -m social_scheduler.cli create-post
+
+### List scheduled posts
+python -m social_scheduler.cli list-scheduled
+
+### Post a scheduled item immediately
+python -m social_scheduler.cli post-now post_id

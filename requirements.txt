@@ -1,0 +1,8 @@
+click
+python-dotenv
+openai
+feedparser
+requests
+instagrapi
+schedule
+pillow
